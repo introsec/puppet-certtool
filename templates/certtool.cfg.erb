@@ -1,0 +1,91 @@
+<% if defined?(@organization) -%>
+organization = "<%= @organization %>"
+<% end -%>
+
+<% if defined?(@unit) -%>
+unit = "<%= @unit %>"
+<% end -%>
+
+<% if defined?(@locality) -%>
+locality = "<%= @locality %>"
+<% end -%>
+
+<% if defined?(@state) -%>
+state = "<%= @state %>"
+<% end -%>
+
+<% if defined?(@country) -%>
+country = <%= @country %>
+<% end -%>
+
+<% if defined?(@common_name) -%>
+cn = "<%= @common_name %>"
+<% end -%>
+
+<% if defined?(@serial) -%>
+serial = <%= @serial %>
+<% end -%>
+
+<% if defined?(@expiration_days) -%>
+expiration_days = <%= @expiration_days %>
+<% end -%>
+
+<% if defined?(@uris) -%>
+  <% @uris.each do |uri| -%>
+uri = "<%= uri %>"
+  <% end -%>
+<% end -%>
+
+<% if defined?(@dns_names) -%>
+  <% @dns_names.each do |name| -%>
+dns_name = "<%= name %>"
+  <% end -%>
+<% end -%>
+
+<% if defined?(@ip) -%>
+ip_address = "<%= @ip %>"
+<% end -%>
+
+<% if defined?(@email) -%>
+email = "<%= @email %>"
+<% end -%>
+
+<% if @ca == true -%>
+ca
+<% end -%>
+
+<% if defined?(@usage) -%>
+  <% @usage.each do |value| -%>
+<%= value %>
+  <% end -%>
+<% end -%>
+
+<% if @use_request_extensions == true -%>
+honor_crq_extensions
+<% end -%>
+
+<% if defined?(@crl_dist_points) -%>
+  <% @crl_dist_points.each do |distpoint| -%>
+crl_dist_points = "<%= distpoint %>"
+  <% end -%>
+<% end -%>
+
+<% if defined?(@challenge_password) -%>
+challenge_password = "<%= @challenge_password %>"
+<% end -%>
+
+<% if defined?(@password) -%>
+password = "<%= @password %>"
+<% end -%>
+
+<% if defined?(@crl_next_update) -%>
+crl_next_update = <%= @crl_next_update %>
+<% end -%>
+
+<% if defined?(@crl_number) -%>
+crl_number = <%= @crl_number %>
+<% end -%>
+
+<% if defined?(@pkcs12_key_name) -%>
+pkcs12_key_name = "<%= @pkcs12_key_name %>"
+<% end -%>
