@@ -86,7 +86,7 @@ define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                    --load-ca-certificate ${cacertfile} \
                    --load-ca-privkey ${cakeyfile}",
       path     => '/bin:/usr/bin:/sbin:/usr/sbin',
-      require => Exec["certtool-csr-${title}"]
+      require => [Exec["certtool-csr-${title}"], Certtool::Cert[$caname]]
     }
   }
 }
