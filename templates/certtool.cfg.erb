@@ -31,13 +31,13 @@ expiration_days = <%= @expiration_days %>
 <% end -%>
 
 <% if defined?(@uris) -%>
-  <% @uris.each do |uri| -%>
+  <% Array(@uris).each do |uri| -%>
 uri = "<%= uri %>"
   <% end -%>
 <% end -%>
 
 <% if defined?(@dns_names) -%>
-  <% @dns_names.each do |name| -%>
+  <% Array(@dns_names).each do |name| -%>
 dns_name = "<%= name %>"
   <% end -%>
 <% end -%>
@@ -55,7 +55,7 @@ ca
 <% end -%>
 
 <% if defined?(@usage) -%>
-  <% @usage.each do |value| -%>
+  <% Array(@usage).each do |value| -%>
 <%= value %>
   <% end -%>
 <% end -%>
@@ -65,7 +65,7 @@ honor_crq_extensions
 <% end -%>
 
 <% if defined?(@crl_dist_points) -%>
-  <% @crl_dist_points.each do |distpoint| -%>
+  <% Array(@crl_dist_points).each do |distpoint| -%>
 crl_dist_points = "<%= distpoint %>"
   <% end -%>
 <% end -%>
