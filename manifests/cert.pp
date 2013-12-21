@@ -1,5 +1,6 @@
 define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                         $keypath = '/etc/pki/tls/private',
+                        $pubkeypath = '/etc/pki/tls/private',
                         $keybits = 2048,
                         $organization = undef,
                         $unit = undef,
@@ -22,10 +23,11 @@ define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                         $password = undef,
                         $crl_number = undef,
                         $pkcs12_key_name = undef,
-                        $extract_pubkey = false) {
+                        $extract_pubkey = false,
+                        $combine_keycert = false) {
 
   $keyfile = "${keypath}/${title}.key"
-  $pubkeyfile = "${keypath}/${title}-pub.key"
+  $pubkeyfile = "${pubkeypath}/${title}-pub.key"
   $certfile = "${certpath}/${title}.crt"
   $requestfile = "${certpath}/${title}.csr"
   $cacertfile = "${certpath}/${caname}.crt"
@@ -98,6 +100,16 @@ define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                    --load-ca-privkey ${cakeyfile}",
       path     => '/bin:/usr/bin:/sbin:/usr/sbin',
       require => [Exec["certtool-csr-${title}"], Certtool::Cert[$caname]]
+    }
+
+    if $combine_keycert {
+      Exec["certtool-cert-${title}"] ~> Exec["combine-key-cert-${title}"]
+
+      exec { "combine-key-cert-${title}":
+        command => "cat ${keyfile} >> ${certfile}",
+        path => '/bin:/usr/bin:/sbin:/usr/sbin',
+        refreshonly => true
+      }
     }
   }
 }
