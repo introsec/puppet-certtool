@@ -21,9 +21,11 @@ define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                         $challenge_password = undef,
                         $password = undef,
                         $crl_number = undef,
-                        $pkcs12_key_name = undef) {
+                        $pkcs12_key_name = undef,
+                        $extract_pubkey = false) {
 
   $keyfile = "${keypath}/${title}.key"
+  $pubkeyfile = "${keypath}/${title}-pub.key"
   $certfile = "${certpath}/${title}.crt"
   $requestfile = "${certpath}/${title}.csr"
   $cacertfile = "${certpath}/${caname}.crt"
@@ -56,6 +58,15 @@ define certtool::cert ( $certpath = '/etc/pki/tls/certs',
                  --bits ${keybits}",
     path     => '/bin:/usr/bin:/sbin:/usr/sbin',
     require => File[$keypath]
+  }
+
+  if $extract_pubkey {
+    exec { "certtool-pubkey-${title}":
+      command => "certtool --load-privkey ${keyfile} --pubkey-info --outfile ${pubkeyfile}",
+      path    => '/bin:/usr/bin:/sbin:/usr/sbin',
+      creates => $pubkeyfile,
+      require => Exec["certtool-key-${title}"]
+    }
   }
 
   if $is_ca == true {
