@@ -25,7 +25,8 @@ define certtool::cert (
   $crl_number = undef,
   $pkcs12_key_name = undef,
   $extract_pubkey = false,
-  $combine_keycert = false
+  $combine_keycert = false,
+  $self_signed = false,
 ) {
 
   $keyfile = "${keypath}/${title}.key"
@@ -84,24 +85,35 @@ define certtool::cert (
     }
   }
   else {
-    exec { "certtool-csr-${title}":
-      creates  => $requestfile,
-      command  => "certtool --generate-request --template ${template} \
-                   --load-privkey ${keyfile} \
-                   --outfile ${requestfile}",
-      path     => '/bin:/usr/bin:/sbin:/usr/sbin',
-      require => [File["${certpath}/certtool-${title}.cfg"], File[$keyfile]]
-    }
+    if $self_signed == true {
+      exec { "certtool-cert-${title}":
+        creates  => $certfile,
+        command  => "certtool --generate-self-signed --template ${template} \
+                     --load-privkey ${keyfile} \
+                     --outfile ${certfile}",
+        path     => '/bin:/usr/bin:/sbin:/usr/sbin',
+        require => [File[$template], File[$keyfile]]
+      }
+    } else {
+      exec { "certtool-csr-${title}":
+        creates  => $requestfile,
+        command  => "certtool --generate-request --template ${template} \
+                     --load-privkey ${keyfile} \
+                     --outfile ${requestfile}",
+        path     => '/bin:/usr/bin:/sbin:/usr/sbin',
+        require => [File["${certpath}/certtool-${title}.cfg"], File[$keyfile]]
+      }
 
-    exec { "certtool-cert-${title}":
-      creates  => $certfile,
-      command  => "certtool --generate-certificate --template ${template} \
-                   --load-request ${requestfile} \
-                   --outfile ${certfile} \
-                   --load-ca-certificate ${cacertfile} \
-                   --load-ca-privkey ${cakeyfile}",
-      path     => '/bin:/usr/bin:/sbin:/usr/sbin',
-      require => [Exec["certtool-csr-${title}"], Certtool::Cert[$caname]]
+      exec { "certtool-cert-${title}":
+        creates  => $certfile,
+        command  => "certtool --generate-certificate --template ${template} \
+                     --load-request ${requestfile} \
+                     --outfile ${certfile} \
+                     --load-ca-certificate ${cacertfile} \
+                     --load-ca-privkey ${cakeyfile}",
+        path     => '/bin:/usr/bin:/sbin:/usr/sbin',
+        require => [Exec["certtool-csr-${title}"], Certtool::Cert[$caname]]
+      }
     }
 
     if $combine_keycert {
