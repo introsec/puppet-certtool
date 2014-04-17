@@ -28,6 +28,9 @@ define certtool::cert (
   $combine_keycert = false,
   $self_signed = false,
 ) {
+  if !defined(Class[$module_name]) {
+    fail("Class ${module_name} not defined, please include it in your manifest.")
+  }
 
   $keyfile = "${keypath}/${title}.key"
   $pubkeyfile = "${pubkeypath}/${title}-pub.key"
