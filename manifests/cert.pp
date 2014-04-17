@@ -1,7 +1,7 @@
 define certtool::cert (
-  $certpath = '/etc/pki/tls/certs',
-  $keypath = '/etc/pki/tls/private',
-  $pubkeypath = '/etc/pki/tls/private',
+  $certpath = $certtool::params::certpath,
+  $keypath = $certtool::params::keypath,
+  $pubkeypath = $certtool::params::pubkeypath,
   $keybits = 2048,
   $organization = undef,
   $unit = undef,
