@@ -1,3 +1,7 @@
+# Private class: certtool::params
+#
+# Module defaults for various operating systems
+#
 class certtool::params {
   if $::kernel != 'Linux' {
     fail("${module_name} is only supported on Linux")
