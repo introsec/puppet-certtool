@@ -1,5 +1,7 @@
 # Certtool Modul for puppet
 
+[![Build Status](https://travis-ci.org/mgruener/puppet-certtool.png?branch=master)](https://travis-ci.org/mgruener/puppet-certtool)
+
 **Manages SSL certificates**
 
 This module is used to create SSL certificates using certtool. This
