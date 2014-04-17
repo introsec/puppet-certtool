@@ -6,18 +6,18 @@
 #
 # [*package*]
 #   Name of the package containing certtool. Default depends on the distribution
-#   being used. 
+#   being used.
 #
 # [*ensure*]
 #   Ensure parameter for the package resource. Default "present".
 #
 # === Actions:
-# - Install the package providing certtool 
+# - Install the package providing certtool
 #
 # === Requires
 #
 # === Author
-# 
+#
 # Michael Gruener <michael.gruener@chaosmoon.net>
 #
 # === Copyright

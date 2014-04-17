@@ -42,8 +42,8 @@
 #   but should be provided the create a working certificate.
 #
 # [*common_name*]
-#   The common name (CN) of the certificate. Normally the FQDN of system. Optional
-#   but should be provided the create a working certificate.
+#   The common name (CN) of the certificate. Normally the FQDN of system.
+#   Optional but should be provided the create a working certificate.
 #
 # [*serial*]
 #   The serial number of the certificate. Default is a random number.
@@ -55,7 +55,8 @@
 #   Array of URIs using this certificate. Optional.
 #
 # [*dns_names*]
-#   Array of alternate names (Subject alternate name) for the certificate. Optional.
+#   Array of alternate names (Subject alternate name) for the certificate.
+#   Optional.
 #
 # [*ip*]
 #   Array of IP adresses using this certificate. Optional.
@@ -68,8 +69,9 @@
 #   Set this to true if you want to create a CA certificate. Default false.
 #
 # [*caname*]
-#   The name of the certtool::cert resource of the CA certificate that should sign
-#   this certificate. Only used if this is a non-CA non-self-signed certificate.
+#   The name of the certtool::cert resource of the CA certificate that should
+#   sign this certificate. Only used if this is a non-CA non-self-signed
+#   certificate.
 #
 # [*usage*]
 #   Array of usage types for this certificate, examples are
@@ -95,7 +97,8 @@
 # [*pkcs12_key_name*]
 #
 # [*extract_pubkey*]
-#   Creates a separate file containing the public key if set to true. Default false.
+#   Creates a separate file containing the public key if set to true. Default
+#   false.
 #
 # [*combine_keycert*]
 #   If set to true, the private key of the certificate will be included
@@ -106,7 +109,7 @@
 #   (if $is_ca = true) are always self-signed. Default false.
 #
 # === Author
-# 
+#
 # Michael Gruener <michael.gruener@chaosmoon.net>
 #
 # === Copyright

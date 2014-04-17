@@ -10,7 +10,7 @@ class certtool::params {
         $keypath = '/etc/ssl/private'
         $pubkeypath = '/etc/ssl/private'
       }
-    /^Fedora|^RedHat|^CentOS/: { 
+    /^Fedora|^RedHat|^CentOS/: {
         $package = 'gnutls-utils'
         $certpath = '/etc/pki/tls/certs'
         $keypath = '/etc/pki/tls/private'
