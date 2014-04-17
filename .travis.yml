@@ -1,0 +1,4 @@
+rvm: 1.8.7
+env:
+  - PUPPET_VERSION=3.4.2
+  - PUPPER_VERSION=3.5.1
