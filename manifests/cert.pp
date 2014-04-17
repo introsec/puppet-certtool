@@ -243,7 +243,7 @@ define certtool::cert (
 
       exec { "combine-key-cert-${title}":
         command     => "cat ${keyfile} >> ${certfile}",
-        path         => '/bin:/usr/bin:/sbin:/usr/sbin',
+        path        => '/bin:/usr/bin:/sbin:/usr/sbin',
         refreshonly => true
       }
     }
