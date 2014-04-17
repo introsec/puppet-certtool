@@ -1,4 +1,5 @@
 class testca {
+  include certtool
   $caname = "TestCA"
   Certtool::Cert {
     organization    => "Test Organization",
