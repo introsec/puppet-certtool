@@ -1,5 +1,5 @@
 class certtool::params {
-  if $::kernel != "Linux" {
+  if $::kernel != 'Linux' {
     fail("${module_name} is only supported on Linux")
   }
 
