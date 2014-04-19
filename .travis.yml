@@ -8,6 +8,6 @@ env:
   - PUPPET_VERSION=2.7.23
   - PUPPET_VERSION=2.7.25
   - PUPPET_VERSION=3.4.3
-  - PUPPER_VERSION=3.5.1
+  - PUPPET_VERSION=3.5.1
 matrix:
   fast_finish: true
