@@ -46,4 +46,50 @@ describe 'certtool::cert', :type => :define do
       ) }
     end
   end
+
+  describe 'os-independent items' do
+    let :facts do
+      {
+        :kernel   => 'Linux',
+        :osfamily => 'RedHat',
+      }
+    end
+    let :default_params do
+      {
+        :certpath   => '/rspec/certs',
+        :keypath    => '/rspec/private',
+        :pubkeypath => '/rspec/public'
+      }
+    end
+    describe "basic requirements" do
+      let :params do default_params end
+      it { should contain_class("certtool") }
+      it { should contain_class("certtool::params") }
+
+      it { should contain_file("#{params[:certpath]}").with(
+        :ensure => 'directory'
+      ) }
+
+      it { should contain_file("#{params[:keypath]}").with(
+        :ensure => 'directory'
+      ) }
+
+      it { should contain_file("#{params[:pubkeypath]}").with(
+        :ensure => 'directory'
+      ) }
+
+      it { should contain_file("#{params[:certpath]}/certtool-#{title}.cfg").with(
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root'
+      ) }
+
+      it { should contain_file("#{params[:keypath]}/#{title}.key").with(
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0600'
+      ) }
+    end
+  end
 end
