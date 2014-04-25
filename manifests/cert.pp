@@ -170,7 +170,7 @@ define certtool::cert (
   }
 
   file { $keyfile:
-    ensure  => present,
+    ensure  => file,
     mode    => '0600',
     owner   => root,
     group   => root,
