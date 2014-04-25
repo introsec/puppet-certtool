@@ -158,7 +158,7 @@ define certtool::cert (
   $cakeyfile = "${keypath}/${caname}.key"
   $template = "${certpath}/certtool-${title}.cfg"
 
-  ensure_resource ( 'file' , [$certpath, $keypath], { ensure  => directory, })
+  ensure_resource ( 'file' , [$certpath, $keypath, $pubkeypath], { ensure  => directory, })
 
   file { $template:
     ensure  => file,
