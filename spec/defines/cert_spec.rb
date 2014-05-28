@@ -82,7 +82,7 @@ describe 'certtool::cert', :type => :define do
         :ensure => 'file',
         :owner  => 'root',
         :group  => 'root'
-      ) }
+      ).that_requires("File[#{params[:certpath]}]") }
 
       it { should contain_file("#{params[:keypath]}/#{title}.key").with(
         :ensure => 'file',
@@ -90,6 +90,11 @@ describe 'certtool::cert', :type => :define do
         :group  => 'root',
         :mode   => '0600'
       ) }
+
+      it { should contain_exec("certtool-key-#{title}").with(
+        :creates => "#{params[:keypath]}/#{title}.key",
+        :command => /.*certtool.*--generate-privkey/
+      ).that_requires("File[#{params[:keypath]}]") }
     end
   end
 end
