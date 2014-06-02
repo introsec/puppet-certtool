@@ -1,0 +1,8 @@
+name 'mgruener-certtool'
+version '1.0.0'
+license 'BSD'
+summary 'Manage SSL certificates with certtool'
+description 'Manage SSL certificates with certtool'
+dependency 'puppetlabs/stdlib', '>= 3.2.1'
+project_page 'https://github.com/mgruener/puppet-certtool'
+source 'git://github.com/mgruener/puppet-certtool.git'
