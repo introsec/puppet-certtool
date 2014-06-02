@@ -1,6 +1,6 @@
 # Certtool Module for puppet
 
-[![Build Status](https://travis-ci.org/mgruener/puppet-certtool.png?branch=master)](https://travis-ci.org/mgruener/puppet-certtool)
+[![Build Status](https://travis-ci.org/Millenux/puppet-certtool.png?branch=master)](https://travis-ci.org/Millenux/puppet-certtool)
 
 **Manages SSL certificates**
 
@@ -47,7 +47,7 @@ Create a SSL certificate.
 ## Contributing
 
 Please report bugs and feature request using [GitHub issue
-tracker](https://github.com/mgruener/puppet-certtool/issues).
+tracker](https://github.com/Millenux/puppet-certtool/issues).
 
 ## License
 
