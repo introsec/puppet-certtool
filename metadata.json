@@ -1,0 +1,34 @@
+{
+  "name": "millenux-certtool",
+  "version": "1.0.0",
+  "author": "millenux",
+  "summary": "Manage SSL certificates with certtool",
+  "license": "BSD",
+  "source": "git://github.com/Millenux/puppet-certtool.git",
+  "project_page": "https://github.com/Millenux/puppet-certtool",
+  "issues_url": "https://github.com/Millenux/puppet-certtool/issues",
+  "description": "Manage SSL certificates with certtool",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 3.2.1"
+    }
+  ],
+  "operatingsystem_support": [
+    { "operatingsystem": "RedHat" },
+    { "operatingsystem": "CentOS" },
+    { "operatingsystem": "Fedora" },
+    { "operatingsystem": "Debian" },
+    { "operatingsystem": "Ubuntu" }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ]
+}
