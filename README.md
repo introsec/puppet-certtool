@@ -1,4 +1,4 @@
-# Certtool Modul for puppet
+# Certtool Module for puppet
 
 [![Build Status](https://travis-ci.org/mgruener/puppet-certtool.png?branch=master)](https://travis-ci.org/mgruener/puppet-certtool)
 
