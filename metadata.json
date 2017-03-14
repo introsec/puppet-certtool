@@ -1,13 +1,13 @@
 {
-  "name": "millenux-certtool",
-  "version": "1.0.0",
-  "author": "millenux",
+  "name": "hyper3xpl0iter-certtool",
+  "version": "0.1.1",
+  "author": "Andre Mattie",
   "summary": "Manage SSL certificates with certtool",
-  "license": "BSD",
-  "source": "git://github.com/Millenux/puppet-certtool.git",
-  "project_page": "https://github.com/Millenux/puppet-certtool",
-  "issues_url": "https://github.com/Millenux/puppet-certtool/issues",
-  "description": "Manage SSL certificates with certtool",
+  "license": "Apache-2.0",
+  "source": "git@github.com:IntroSec/puppet-certtool.git",
+  "project_page": "https://github.com/IntroSec/puppet-certtool",
+  "issues_url": "https://github.com/IntroSec/puppet-certtool/issues",
+  "description": "Manage SSL certificates with certtool forked from Millenux",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -26,9 +26,5 @@
       "name": "pe",
       "version_requirement": "3.2.x"
     },
-    {
-      "name": "puppet",
-      "version_requirement": "3.x"
-    }
   ]
 }

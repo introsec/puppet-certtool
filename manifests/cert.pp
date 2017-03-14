@@ -128,7 +128,7 @@ define certtool::cert (
   $country = undef,
   $common_name = $title,
   $serial = undef,
-  $expiration_days = 365,
+  $expiration_days = 1825,
   $uris = undef,
   $dns_names = undef,
   $ip = undef,
