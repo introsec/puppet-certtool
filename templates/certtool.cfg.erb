@@ -89,3 +89,11 @@ crl_number = <%= @crl_number %>
 <% if defined?(@pkcs12_key_name) -%>
 pkcs12_key_name = "<%= @pkcs12_key_name %>"
 <% end -%>
+
+<% if defined?(@activation_date) -%>
+activation_date = "<%= @activation_date %>"
+<% end -%>
+
+<% if defined?(@expiration_date) -%>
+expiration_date = "<%= @expiration_date %>"
+<% end -%>
