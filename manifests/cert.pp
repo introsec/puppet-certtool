@@ -108,6 +108,21 @@
 #   If the to true the resulting certificate will be self-signed. CA certifcates
 #   (if $is_ca = true) are always self-signed. Default false.
 #
+# [*owner*]
+#   The owner of the generated files. Default root.
+#
+# [*group*]
+#   The group of the generated files. Default root.
+#
+# [*seed*]
+#   Seed for deterministic generation of certificates.
+#
+# [*activation_date*]
+#   Start date for the certificate. Useful for deterministic certificates.
+#
+# [*expiration_date*]
+#   Expiration date for the certificate. Useful for deterministic certificates.
+#
 # === Author
 #
 # Michael Gruener <michael.gruener@chaosmoon.net>
@@ -128,7 +143,7 @@ define certtool::cert (
   $country = undef,
   $common_name = $title,
   $serial = undef,
-  $expiration_days = 1825,
+  $expiration_days = undef,
   $uris = undef,
   $dns_names = undef,
   $ip = undef,
@@ -145,6 +160,11 @@ define certtool::cert (
   $extract_pubkey = false,
   $combine_keycert = false,
   $self_signed = false,
+  $owner = 'root',
+  $group = 'root',
+  $seed = undef,
+  $activation_date = undef,
+  $expiration_date = undef,
 ) {
   if !defined(Class[$module_name]) {
     fail("Class ${module_name} not defined, please include it in your manifest.")
@@ -157,13 +177,22 @@ define certtool::cert (
   $cacertfile = "${certpath}/${caname}.crt"
   $cakeyfile = "${keypath}/${caname}.key"
   $template = "${certpath}/certtool-${title}.cfg"
+  $seed_arg = $seed ? {
+    undef => '',
+    default => "--seed=${seed}",
+  }
+
+  # Set the default for the expiration_days if not supplied
+  if ($expiration_date == undef) and ($expiration_days == undef) {
+    $expiration_days = 365
+  }
 
   ensure_resource ( 'file' , [$certpath, $keypath, $pubkeypath], { ensure  => directory, })
 
   file { $template:
     ensure  => file,
-    owner   => root,
-    group   => root,
+    owner   => $owner,
+    group   => $group,
     mode    => '0640',
     content => template("${module_name}/certtool.cfg.erb"),
     require => File[$certpath]
@@ -172,22 +201,27 @@ define certtool::cert (
   file { $keyfile:
     ensure  => file,
     mode    => '0600',
-    owner   => root,
-    group   => root,
+    owner   => $owner,
+    group   => $group,
     require => Exec["certtool-key-${title}"]
   }
 
   exec { "certtool-key-${title}":
+    user    => $owner,
+    group   => $group,
     creates => $keyfile,
     command => "certtool --generate-privkey \
                 --outfile ${keyfile} \
-                --bits ${keybits}",
+                --bits ${keybits} \
+                ${seed_arg}",
     path    => '/bin:/usr/bin:/sbin:/usr/sbin',
     require => File[$keypath]
   }
 
   if $extract_pubkey {
     exec { "certtool-pubkey-${title}":
+      user    => $owner,
+      group   => $group,
       command => "certtool --load-privkey ${keyfile} --pubkey-info \
                   --outfile ${pubkeyfile}",
       path    => '/bin:/usr/bin:/sbin:/usr/sbin',
@@ -198,6 +232,8 @@ define certtool::cert (
 
   if $is_ca == true {
     exec { "certtool-ca-${title}":
+      user    => $owner,
+      group   => $group,
       creates => $certfile,
       command => "certtool --generate-self-signed --template ${template} \
                   --load-privkey ${keyfile} \
@@ -209,6 +245,8 @@ define certtool::cert (
   else {
     if $self_signed == true {
       exec { "certtool-cert-${title}":
+        user    => $owner,
+        group   => $group,
         creates => $certfile,
         command => "certtool --generate-self-signed --template ${template} \
                     --load-privkey ${keyfile} \
@@ -218,6 +256,8 @@ define certtool::cert (
       }
     } else {
       exec { "certtool-csr-${title}":
+        user    => $owner,
+        group   => $group,
         creates => $requestfile,
         command => "certtool --generate-request --template ${template} \
                     --load-privkey ${keyfile} \
@@ -227,6 +267,8 @@ define certtool::cert (
       }
 
       exec { "certtool-cert-${title}":
+        user    => $owner,
+        group   => $group,
         creates => $certfile,
         command => "certtool --generate-certificate --template ${template} \
                     --load-request ${requestfile} \
@@ -242,6 +284,8 @@ define certtool::cert (
       Exec["certtool-cert-${title}"] ~> Exec["combine-key-cert-${title}"]
 
       exec { "combine-key-cert-${title}":
+        user        => $owner,
+        group       => $group,
         command     => "cat ${keyfile} >> ${certfile}",
         path        => '/bin:/usr/bin:/sbin:/usr/sbin',
         refreshonly => true
